@@ -2,6 +2,7 @@
   "expo": {
     "name": "pettore",
     "slug": "pettore",
+    "scheme": "pettore",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,13 +16,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.donginkim.pettore"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.donginkim.pettore"
     },
     "web": {
       "favicon": "./assets/favicon.png"
