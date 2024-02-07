@@ -1,0 +1,38 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    },
+    "allowJs": true, // js 파일들 ts에서 import해서 쓸 수 있는지
+    "checkJs": false, // 일반 js 파일에서도 에러체크 여부
+    "jsx": "preserve", // tsx 파일을 jsx로 어떻게 컴파일할 것인지 'preserve', 'react-native', 'react'
+    "declaration": true, //컴파일시 .d.ts 파일도 자동으로 함께생성 (현재쓰는 모든 타입이 정의된 파일)
+    "module": "amd", //컴파일시 모듈로 사용할 것인지, commonjs, amd, umd, system, es6
+    "outFile": "./", //모든 ts파일을 js파일 하나로 컴파일해줌 (module이 none, amd, system일 때만 가능)
+    "removeComments": true, //컴파일시 주석제거
+
+    "noImplicitAny": true, //any타입 금지 여부
+    "strictNullChecks": true, //null, undefined 타입에 체크
+    "strictFunctionTypes": true, //함수파라미터 타입체크 강하게
+    "strictPropertyInitialization": true, //class constructor 작성시 타입체크 강하게
+    "noImplicitThis": true, //this 키워드가 any 타입일 경우 에러내기
+    "alwaysStrict": true, //자바스크립트 "use strict" 모드 켜기
+
+    "noUnusedLocals": true, //쓰지않는 지역변수 있으면 에러내기
+    "noUnusedParameters": true, //쓰지않는 파라미터 있으면 에러내기
+    "noImplicitReturns": true, //함수에서 return 빼먹으면 에러내기
+    "noFallthroughCasesInSwitch": true, //switch문 이상하면 에러내기
+    "types": [],
+    "strict": true,
+  },
+  "eslint": {
+    "files": ["@/**/*.ts", "@/**/*.tsx"], // ESLint를 적용할 파일 경로
+    "extensions": [".ts", ".tsx"], // TypeScript 확장자 지정
+    "ignorePatterns": ["node_modules/", "build/"], // ESLint 무시할 경로
+    // ESLint에 대한 추가적인 설정 (선택 사항)
+  }
+}
