@@ -66,4 +66,7 @@ yarn start
 
 
 ### Reference
-[async-storage document](https://react-native-async-storage.github.io/async-storage/docs/install/)
+[async-storage document](https://react-native-async-storage.github.io/async-storage/docs/install/)   
+[android maps sdk](https://developers.google.com/maps/documentation/android-sdk?hl=ko)   
+[react-native-maps setting](https://docs.expo.dev/versions/latest/sdk/map-view/#copy-your-apps-sha-1-certificate-fingerprint)   
+[react-native-paper docs](https://callstack.github.io/react-native-paper/docs/guides/icons)

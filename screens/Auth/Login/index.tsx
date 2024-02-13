@@ -28,7 +28,8 @@ import {
 } from '@/util/common'
 
 // components
-import Input from '@/components/atoms/Input'
+
+import { InputForm } from '@/components/molecules/InputForm'
 import Row from '@/components/atoms/Row'
 import Col from '@/components/atoms/Col'
 import FlatButton from '@/components/atoms/FlatButton'
@@ -164,7 +165,7 @@ export default function LoginScreen (): React.JSX.Element {
           </View>
           {/* middle */}
           <View>
-            <Input
+            <InputForm
               placeholder="아이디"
               onChangeText={(text: string) => { handleInput({ flag: 'id', value: text }) }}
               value={id}
@@ -172,7 +173,7 @@ export default function LoginScreen (): React.JSX.Element {
               isResetButton={id.length > 0} resetHandler={() => { resetTextHandler('id') }}
               propsStyle={{ marginBottom: 10 }}
             />
-            <Input
+            <InputForm
               placeholder="비밀번호"
               onChangeText={(text: string) => { handleInput({ flag: 'password', value: text }) }}
               value={password}

@@ -2,7 +2,6 @@ import React, { useLayoutEffect, useState } from 'react'
 import { View, StyleSheet, Text, ScrollView } from 'react-native'
 
 // components
-import Input from '@/components/atoms/Input'
 import FlatButton from '@/components/atoms/FlatButton'
 
 // api
@@ -22,15 +21,14 @@ import Checkbox from '@/components/atoms/Checkbox'
 import { failCode, successCode } from '@/constants/responseCode'
 import { toastAtom } from '@/store/common'
 import useToast from '@/customhooks/useToast'
-import { convertResponseCodeToMsg, isSuccessApiCall } from '@/util/common'
-import useLoading from '@/customhooks/useLoading'
+import {InputForm} from "@/components/molecules/InputForm";
+import {isSuccessApiCall} from "@/util/common";
 
 function SignupScreen (): React.JSX.Element {
   const queryString = useAtomValue(convertUrlQueryString)
   const setToastInfo = useSetAtom(toastAtom)
 
   const { navigation } = useCustomNavigation()
-  const { showLoading, hideLoading } = useLoading()
 
   const [currentSetp, setCurrentStep] = useState(1)
 
@@ -181,23 +179,13 @@ function SignupScreen (): React.JSX.Element {
       social: socialLoginType
     }
 
-    try {
-      showLoading()
-
-      const response = await createUser(param as IloginParams)
-      if (isSuccessApiCall(response.code)) {
-        navigation.navigate('Index', { screen: 'Home' })
-        setToastInfo({ is: true, msg: convertResponseCodeToMsg(response.code), type: 'success' })
-      } else {
-        setToastInfo({ is: true, msg: convertResponseCodeToMsg(response.code), type: 'error' })
-      }
-    } catch (e) {
-      hideLoading()
-      throw new Error(`handleSignup : ${e}`)
-    } finally {
-      hideLoading()
+    const response = await createUser(param as IloginParams)
+    if (isSuccessApiCall(response.code)) {
+      navigation.navigate('Index', { screen: 'Home' })
+      setToastInfo({ is: true, msg: response.message, type: 'success' })
+    } else {
+      setToastInfo({ is: true, msg: response.message, type: 'error' })
     }
-
   }
 
   // 중복체크
@@ -252,13 +240,13 @@ function SignupScreen (): React.JSX.Element {
           <Checkbox style={{ marginBottom: 30 }} isSelect={signUpData.agreeReciveInfo.value} onChange={(is) => { handleCheckbox(is, 'reciveInfo') }}>광고성 정보 수신 및 마케팅 활용 동의</Checkbox>
         </View>
         <View>
-          <Input placeholder="이름" onChangeText={(data) => { handleSignUpData('name', data) }} value={signUpData.name.value} errorCode={signUpData.name.errorCode}/>
-          <Input placeholder="생년월일" onChangeText={(data) => { handleSignUpData('birthDay', data) }} value={signUpData.birthDay.value} errorCode={signUpData.birthDay.errorCode}/>
-          <Input placeholder="휴대폰번호" onChangeText={(data) => { handleSignUpData('phone', data) }} value={signUpData.phone.value} errorCode={signUpData.phone.errorCode}/>
+          <InputForm placeholder="이름" onChangeText={(data) => { handleSignUpData('name', data) }} value={signUpData.name.value} errorCode={signUpData.name.errorCode}/>
+          <InputForm placeholder="생년월일" onChangeText={(data) => { handleSignUpData('birthDay', data) }} value={signUpData.birthDay.value} errorCode={signUpData.birthDay.errorCode}/>
+          <InputForm placeholder="휴대폰번호" onChangeText={(data) => { handleSignUpData('phone', data) }} value={signUpData.phone.value} errorCode={signUpData.phone.errorCode}/>
         </View>
         <View>
-          <Input placeholder="이메일" onChangeText={(data) => { handleSignUpData('email', data) }} value={signUpData.email.value} errorCode={signUpData.email.errorCode}/>
-          <Input
+          <InputForm placeholder="이메일" onChangeText={(data) => { handleSignUpData('email', data) }} value={signUpData.email.value} errorCode={signUpData.email.errorCode}/>
+          <InputForm
             placeholder="닉네임"
             onChangeText={(data) => { handleSignUpData('nickname', data) }}
             value={signUpData.nickname.value}
@@ -272,12 +260,12 @@ function SignupScreen (): React.JSX.Element {
               propStyle={styled.greenButton}
               disabled={isNickNameDuplication || signUpData.nickname.value === ''}
             >중복확인</FlatButton>
-          </Input>
+          </InputForm>
         </View>
         {
           isNotSocialLogin && (
             <View>
-              <Input
+              <InputForm
                 placeholder="아이디"
                 onChangeText={(data) => { handleSignUpData('id', data) }}
                 value={signUpData.id.value}
@@ -291,9 +279,9 @@ function SignupScreen (): React.JSX.Element {
                   propStyle={styled.greenButton}
                   disabled={isIdDuplication || signUpData.id.value === ''}
                 >중복확인</FlatButton>
-              </Input>
-              <Input placeholder="비밀번호" onChangeText={(data) => { handleSignUpData('password', data) }} isSecure value={signUpData.password.value} errorCode={signUpData.password.errorCode}/>
-              <Input placeholder="비밀번호 확인" onChangeText={(data) => { handleSignUpData('passwordConfirm', data) }} isSecure value={signUpData.passwordConfirm.value} errorCode={signUpData.passwordConfirm.errorCode}/>
+              </InputForm>
+              <InputForm placeholder="비밀번호" onChangeText={(data) => { handleSignUpData('password', data) }} isSecure value={signUpData.password.value} errorCode={signUpData.password.errorCode}/>
+              <InputForm placeholder="비밀번호 확인" onChangeText={(data) => { handleSignUpData('passwordConfirm', data) }} isSecure value={signUpData.passwordConfirm.value} errorCode={signUpData.passwordConfirm.errorCode}/>
             </View>
           )
         }

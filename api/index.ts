@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 // import { createResponseMsg, isSuccessApiCall, setToken } from '@/util/common'
 import type responseCode from '@/constants/responseCode'
-import {IBannerListResponse, IHotPlaceResponse, IRecommendPlaceResponse, INewPlaceResponse, IThemeResponse, ILocationCodeResponse} from "@/constants/type/apiResponseType";
+import { type IBannerListResponse, type IHotPlaceResponse, type IRecommendPlaceResponse, type INewPlaceResponse, type IThemeResponse, type ILocationCodeResponse } from '@/constants/type/apiResponseType'
 
 export interface IloginParams {
   id?: string
@@ -40,7 +40,7 @@ interface ItokenResponse {
 }
 
 export const prefix = 'http://jini-dev.xyz:28081'
-
+// export const prefix = 'http://localhost:8081'
 // api 호출함수
 async function fetchData<T> (url = '', params = {}, methods = 'GET'): Promise<T> {
   const Authorization = await AsyncStorage.getItem('accessToken')
@@ -198,12 +198,10 @@ export const getNewPlace = async (): Promise<INewPlaceResponse> => {
   return await fetchData<INewPlaceResponse>(`${prefix}/api/main/new-place`)
 }
 
-
 // 메인 > 테마 추천
 export const getTheme = async (): Promise<IThemeResponse> => {
   return await fetchData<IThemeResponse>(`${prefix}/api/main/theme`)
 }
-
 
 // 지역 코드 조회
 export const getLocationCode = async (): Promise<ILocationCodeResponse> => {

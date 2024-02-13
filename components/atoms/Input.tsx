@@ -1,122 +1,57 @@
 import React from 'react'
-import { TextInput, View, Text, StyleSheet, type StyleProp, type TextStyle } from 'react-native'
-import { Colors, CommonStyle } from '@/constants/styles'
-import IconButton from '@/components/atoms/IconButton'
-import Icon from 'react-native-vector-icons/AntDesign'
-import Row from '@/components/atoms/Row'
-import Col from '@/components/atoms/Col'
-import code from '@/constants/responseCode'
-import { isEmpty } from '@/util/common'
+import { TextInput, StyleSheet, type StyleProp, type TextStyle } from 'react-native'
 
-interface InputProps {
-  value?: string
-  onChangeText: (text: string) => void
-  placeholder?: string
-  isSecure?: boolean
-  errorCode?: string
-  successCode?: string
-  isResetButton?: boolean
-  resetHandler?: () => void
-  children?: React.ReactNode
-  isCustomButton?: boolean
-  propsStyle?: object
-}
-
-function CloseButton ({ onPress }: { onPress: () => void }): React.JSX.Element {
-  return (
-    <IconButton onPress={onPress} style={styles.iconButton}>
-      <Icon name="closecircleo" size={16}/>
-    </IconButton>
-  )
+export interface InputProps {
+  value?: string // 입력값
+  onChangeText: (text: string) => void // 텍스트 변경 핸들러
+  placeholder?: string // placeholder
+  isSecure?: boolean // secureTextEntry 여부
+  onFocus?: (e: boolean) => void // 포커스 이벤트
+  onBlur?: (e: boolean) => void // 포커스 아웃 이벤트
+  customStyle?: StyleProp<TextStyle> // 커스텀 스타일
 }
 
 export function Input ({ onChangeText, ...props }: InputProps): React.JSX.Element {
-  const { isSecure, placeholder, value, errorCode, isResetButton, resetHandler, isCustomButton, successCode, children } = props
-  const [isFocus, setIsFocus] = React.useState(false)
+  const {
+    isSecure,
+    placeholder,
+    value,
+    customStyle,
+    onFocus,
+    onBlur
+  } = props
+
   const handleTextChange = (text: string): void => {
     onChangeText(text)
   }
 
-  const getTextColor = (): { color: string } | string => {
-    return !isEmpty(errorCode) ? CommonStyle.colorRed : !isEmpty(successCode) ? CommonStyle.colorPrimary : ''
+  const onFocusHandler = (e: boolean): void => {
+    if (onFocus !== undefined) onFocus(e)
   }
-
-  const getBorderColor = (): { borderColor: string } | string => {
-    return !isEmpty(errorCode) ? styles.borderBottomError : !isEmpty(successCode) ? styles.borderBottomSuccess : ''
+  const onBlurHandler = (e: boolean): void => {
+    if (onBlur !== undefined) onBlur(e)
   }
 
   return (
-    <View style={[styles.inputContainer, { ...props.propsStyle }]}>
-      <Row propsStyle={[
-        styles.inputBorder,
-        CommonStyle.colCenter, getBorderColor() as StyleProp<TextStyle>
-      ]}>
-        <Col propsStyle={styles.positionRelative}>
-          <Text style={[styles.placeholder, isFocus && styles.placeholderActive]}>{placeholder}</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType='default'
-            secureTextEntry={isSecure}
-            onChangeText={handleTextChange}
-            value={value}
-            onFocus={() => { setIsFocus(true) }}
-            onBlur={() => { setIsFocus(value !== undefined && value.length > 0) }}
-          />
-        </Col>
-        {(isCustomButton ?? false) && children}
-        {(isResetButton ?? false) && <CloseButton onPress={resetHandler as () => void} />}
-      </Row>
-      <Text
-        style={[styles.descriptionText, getTextColor() as StyleProp<TextStyle>]}
-      >
-        {(errorCode !== null) && code[errorCode as keyof typeof code]}
-        {(successCode !== null) && code[successCode as keyof typeof code]}
-      </Text>
-    </View>
+    <TextInput
+      style={[styles.input, customStyle !== undefined && customStyle]}
+      keyboardType='default'
+      secureTextEntry={isSecure}
+      onChangeText={handleTextChange}
+      placeholder={placeholder}
+      value={value}
+      onFocus={() => { onFocusHandler(true) }}
+      onBlur={() => { onBlurHandler(value !== undefined && value.length > 0) }}
+    />
   )
 }
 
 const styles = StyleSheet.create({
-  iconButton: { width: 30 },
-  inputContainer: {
-    justifyContent: 'center',
-    marginTop: 10
-  },
-  inputBorder: {
-    borderBottomWidth: 1,
-    borderColor: Colors.black05,
-    borderStyle: 'solid'
-  },
   input: {
+    flex: 1,
     fontSize: 15,
     fontWeight: '400',
-    color: '#000',
-    paddingLeft: 18,
-    paddingTop: 21,
-    paddingBottom: 21
-
-  },
-  positionRelative: { position: 'relative' },
-  placeholder: {
-    position: 'absolute',
-    left: 18,
-    top: 23,
-    fontSize: 14,
-    color: Colors.black01,
-    zIndex: 1
-  },
-  placeholderActive: {
-    top: -10
-  },
-  borderBottomError: {
-    borderColor: Colors.error500
-  },
-  borderBottomSuccess: {
-    borderColor: Colors.primary
-  },
-  descriptionText: {
-    height: 18,
-    marginTop: 6
+    color: '#000'
   }
 })
 

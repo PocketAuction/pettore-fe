@@ -13,6 +13,7 @@ import LoginScreen from '../screens/Auth/Login'
 import FindScreen from '../screens/Auth/Find'
 import HomeScreen from '../screens/Home/index'
 import UserScreen from '../screens/other/index'
+import SearchScreen from '../screens/Search/index'
 import SettingsScreen from '../screens/Settings'
 import SignupScreen from '../screens/Auth/SignUp'
 import HotPlaceScreen from '../screens/HotPlace'
@@ -77,7 +78,7 @@ function LoginSuccessNavigation (): React.JSX.Element {
       />
       <BottomTab.Screen
         name="Search"
-        component={UserScreen}
+        component={SearchScreen}
         options={{
           title: '검색',
           headerShown: false,

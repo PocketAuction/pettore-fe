@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
-export default function FindComponent (): JSX.Element {
+export default function FindComponent (): React.JSX.Element {
   return (
     <View style={styles.container}>
       <Text>Find</Text>
