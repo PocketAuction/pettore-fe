@@ -12,19 +12,35 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaryAndWhenInUsePermission": "'펫토레'이(가) 사용자의 위치를 사용하도록 허용하시겠습니까?"
+        }
+      ]
+    ],
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.donginkim.pettore"
+      "bundleIdentifier": "com.pettore.app",
+      "config": {
+        "googleMapsApiKey": "AIzaSyDD_3XDvCqiZZBfoe4mBr8CL24YUr18KSI"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.donginkim.pettore"
+      "package": "com.pettore.app",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDD_3XDvCqiZZBfoe4mBr8CL24YUr18KSI"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
