@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react'
-import { SafeAreaView, TouchableOpacity } from 'react-native'
+import {SafeAreaView, TouchableOpacity} from 'react-native'
 import * as Linking from 'expo-linking'
 import * as SplashScreen from 'expo-splash-screen'
 
@@ -70,6 +70,11 @@ function LoginSuccessNavigation (): React.JSX.Element {
         component={HomeScreen}
         options={{
           title: '홈',
+          headerRight: () => (
+            <IconButton onPress={() => { navigation.navigate('Search', {params: {flag: 'Detail'}}) }} style={{ marginRight: 15 }}>
+              <Ionicons name="search" size={20} />
+            </IconButton>
+          ),
           tabBarButton: (props) => <TouchableOpacity {...props} />,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" color={color} size={size} />
