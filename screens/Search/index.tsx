@@ -2,9 +2,11 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import MapView from 'react-native-maps'
 import SearchInputWrapper from '@/screens/Search/SearchInputWrapper'
+import { type SearchTabScreenProps } from '@/constants/type/navigationType'
 
-export default function SearchScreen (): React.JSX.Element {
+export default function SearchScreen ({ route }: SearchTabScreenProps): React.JSX.Element {
 
+  console.log('SearchScreen', route.params, Object.prototype.toString.call(route))
   return (
     <View style={styles.container}>
       <SearchInputWrapper />
