@@ -13,7 +13,7 @@ export default function XScrollThemeContent (props: { list: itemProps[], isShowS
 
   return (
     <ScrollView contentContainerStyle={styles.xScrollContentWrap} horizontal={true} showsHorizontalScrollIndicator={false}>
-      {list.map((item: itemProps, index: number) => {
+      {list.map((item: itemProps) => {
         return (
           <View style={styles.contentBox} key={item.seq}>
             <ImageBackground source={{ uri: item.imageUrl }} style={styles.imgWrap}>
