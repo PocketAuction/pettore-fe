@@ -18,7 +18,7 @@ import XScrollRoundContent from '@/components/organisms/XScrollRoundContent'
 import XScrollThemeContent from '@/components/organisms/XScrollThemeContent'
 import styles from './styles'
 
-export default function Home ({ navigation }: { navigation: StackNavigationProp<RootStackParamList> }) {
+export default function Home ({ navigation }: { navigation: StackNavigationProp<RootStackParamList> }): React.JSX.Element {
   const [bannerList, setBannerList] = useState<Array<{}>>([])
   const [hotPlace, setHotPlace] = useState<HotPlaceType[]>([])
   const [newPlace, setNewPlace] = useState<NewPlaceType[]>([])
@@ -28,7 +28,7 @@ export default function Home ({ navigation }: { navigation: StackNavigationProp<
   const rightIcon = <Icon name="right" size={12} color="#898ABD" />
 
   useEffect(() => {
-    getBannerList().then(res => {
+    void getBannerList().then(res => {
       if (isSuccessApiCall(res.code)) {
         setBannerList(res.data)
         console.log('aa', bannerList)
@@ -36,13 +36,13 @@ export default function Home ({ navigation }: { navigation: StackNavigationProp<
     })
 
     // console.log(bannerList, 'banner')
-    getHotPlace().then(res => {
+    void getHotPlace().then(res => {
       if (isSuccessApiCall(res.code)) {
         setHotPlace(res.data)
       }
     })
 
-    getNewPlace().then(res => {
+    void getNewPlace().then(res => {
       if (isSuccessApiCall(res.code)) {
         let data = res.data
         data.forEach(item => {
@@ -53,13 +53,13 @@ export default function Home ({ navigation }: { navigation: StackNavigationProp<
       }
     })
 
-    getRecommendPlace().then(res => {
+    void getRecommendPlace().then(res => {
       if (isSuccessApiCall(res.code)) {
         setRecommendPlace(res.data)
       }
     })
 
-    getTheme().then(res => {
+    void getTheme().then(res => {
       if (isSuccessApiCall(res.code)) {
         setTheme(res.data)
       }
@@ -113,7 +113,7 @@ export default function Home ({ navigation }: { navigation: StackNavigationProp<
   )
 }
 
-const SwiperComponent = (list: any) => {
+const SwiperComponent = (list: any): React.JSX.Element => {
   // const [bannerList, setBannerList]:any = useState([]);
   //
   // useEffect(() => {

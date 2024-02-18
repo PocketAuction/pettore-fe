@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react'
-import {SafeAreaView, TouchableOpacity} from 'react-native'
+import { SafeAreaView, TouchableOpacity } from 'react-native'
 import * as Linking from 'expo-linking'
 import * as SplashScreen from 'expo-splash-screen'
 
@@ -20,12 +20,16 @@ import HotPlaceScreen from '../screens/HotPlace'
 import NewPlaceScreen from '../screens/NewPlace'
 import PlaceDetail from '../screens/PlaceDetail'
 
-import { type AuthStackParamList, type LoginSuccessStackParamList, type RootStackParamList } from '@/constants/type/navigationType'
+import {
+  type AuthStackParamList,
+  type BottomTabParamList, type LoginSuccessStackParamList,
+  type RootStackParamList
+} from '@/constants/type/navigationType'
 import IconButton from '@/components/atoms/IconButton'
 import Icon from 'react-native-vector-icons/AntDesign'
 import useCustomNavigation from '@/customhooks/useCustomNavigation'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-const BottomTab = createBottomTabNavigator<RootStackParamList & AuthStackParamList & LoginSuccessStackParamList>()
+const BottomTab = createBottomTabNavigator<BottomTabParamList>()
 const Stack = createStackNavigator<RootStackParamList & AuthStackParamList & LoginSuccessStackParamList>()
 
 void SplashScreen.preventAutoHideAsync()
@@ -54,6 +58,10 @@ function LoginSuccessNavigation (): React.JSX.Element {
     void hideSplash()
   }, [])
 
+  const goSearch = useCallback((params: Record<string, string>): void => {
+    navigation.navigate('Index', { screen: 'Search', params })
+  }, [])
+
   useEffect(() => {
     void redirectLogin()
   }, [])
@@ -71,7 +79,7 @@ function LoginSuccessNavigation (): React.JSX.Element {
         options={{
           title: '홈',
           headerRight: () => (
-            <IconButton onPress={() => { navigation.navigate('Search', {params: {flag: 'Detail'}}) }} style={{ marginRight: 15 }}>
+            <IconButton onPress={() => { goSearch({ flag: 'DETAIL' }) }} style={{ marginRight: 15 }}>
               <Ionicons name="search" size={20} />
             </IconButton>
           ),
@@ -87,7 +95,7 @@ function LoginSuccessNavigation (): React.JSX.Element {
         options={{
           title: '검색',
           headerShown: false,
-          tabBarButton: (props) => <TouchableOpacity {...props} />,
+          tabBarButton: (props) => <TouchableOpacity {...props} onPress={() => { goSearch({ flag: 'MAP' }) }}/>,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="search" color={color} size={size} />
           )
